@@ -1,0 +1,25 @@
+<div
+  class="flex item-center justify-between py-2 px-4 w-full h-12 bg-yellow-300 border-b-2 border-black fixed top-0"
+>
+  <div class="flex justify-between cursor-pointer">
+    <div>
+      <img
+        src="../../../assets/mymdb_logo.png"
+        alt="mymdb_logo"
+        class="h-full"
+      />
+    </div>
+    <div class="text-2xl text-black px-2" (click)="navigateToHome()">
+      My Movie Database
+    </div>
+  </div>
+  <div class="px-2">
+    <div *ngIf="!isAuthenticated">
+      <button>Login</button>
+    </div>
+    <div *ngIf="isAuthenticated">
+      <button>Home</button>
+      <button>My Movies</button>
+    </div>
+  </div>
+</div>
