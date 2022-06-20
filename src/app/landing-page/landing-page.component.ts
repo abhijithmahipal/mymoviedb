@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -6,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent implements OnInit {
-  constructor() {}
+  constructor(public authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated) {
+      this.router.navigate(['home']);
+    }
+  }
 }

@@ -21,6 +21,11 @@
       <button>Home</button>
       <button>My Movies</button>
       <button (click)="logout()">Log out</button>
+      <img
+        class="w-10 h-10 rounded"
+        [src]="authService.user?.photoURL"
+        alt="Default avatar"
+      />
     </div>
   </div>
 </div>
