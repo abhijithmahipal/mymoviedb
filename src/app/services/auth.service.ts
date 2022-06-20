@@ -1,33 +1,35 @@
 import { Injectable } from '@angular/core';
-import { GoogleAuthProvider } from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  public authenticated = false;
-
+  private _authenticated = false;
+  private _user: firebase.User | undefined | null;
   constructor(public auth: AngularFireAuth) {}
 
-  public googleAuth() {
-    return this.authLogin(new GoogleAuthProvider());
+  public async login(): Promise<void> {
+    const result = await this.auth.signInWithPopup(
+      new firebase.auth.GoogleAuthProvider()
+    );
+    this._authenticated = true;
+    this._user = result.user;
   }
 
-  // Auth logic to run auth providers
-  public authLogin(provider: GoogleAuthProvider) {
-    return this.auth
-      .signInWithPopup(provider)
-      .then((result) => {
-        console.log('You have been successfully logged in!');
-        this.authenticated = true;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  public async logout() {
+    await this.auth.signOut();
   }
 
   public get isAuthenticated() {
-    return this.authenticated;
+    return this._authenticated;
+  }
+
+  public get user(): firebase.User | null {
+    if (this._user) {
+      return this._user;
+    }
+    return null;
   }
 }
